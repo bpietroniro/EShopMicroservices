@@ -12,7 +12,7 @@
         }
     }
 
-    public class StoreBasketCommandHandler : ICommandHandler<StoreBasketCommand, StoreBasketResult>
+    public class StoreBasketCommandHandler(IBasketRepository repository) : ICommandHandler<StoreBasketCommand, StoreBasketResult>
     {
         public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
         {
@@ -20,8 +20,9 @@
 
             // TODO: store basket in database with Marten upsert
             // TODO: update cache
+            await repository.StoreBasket(cart, cancellationToken);
 
-            return new StoreBasketResult("swn");
+            return new StoreBasketResult(cart.UserName);
         }
     }
 }
