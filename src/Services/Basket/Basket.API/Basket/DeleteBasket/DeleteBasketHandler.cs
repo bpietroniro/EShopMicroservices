@@ -8,7 +8,7 @@ namespace Basket.API.Basket.DeleteBasket
     {
         public DeleteBasketCommandValidator()
         {
-            RuleFor(x => x.UserName).NotEmpty().WithMessage("UserName is requied");
+            RuleFor(x => x.UserName).NotEmpty().WithMessage("UserName is required");
         }
     }
     public class DeleteBasketCommandHandler : ICommandHandler<DeleteBasketCommand, DeleteBasketResult>
