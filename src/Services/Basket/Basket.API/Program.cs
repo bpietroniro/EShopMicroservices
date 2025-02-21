@@ -38,10 +38,22 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 
 // gRPC Services
-builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
-{
-    options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
-});
+builder
+    .Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+    {
+        options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+    })
+    // bypass SSL certification
+    // suitable for development environment only
+    .ConfigurePrimaryHttpMessageHandler(() =>
+    {
+        var handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback =
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
+        };
+        return handler;
+    });
 
 // Cross-cutting Services
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
