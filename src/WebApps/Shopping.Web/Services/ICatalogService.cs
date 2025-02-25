@@ -9,6 +9,6 @@
         Task<GetProductByIdResponse> GetProduct(Guid id);
 
         [Get("/catalog-service/products/category/{category}")]
-        Task<GetProductByCategoryResponse> GetProductsByCategory(string cataegory);
+        Task<GetProductByCategoryResponse> GetProductsByCategory(string category);
     }
 }
